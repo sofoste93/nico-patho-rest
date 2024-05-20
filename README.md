@@ -1,7 +1,7 @@
 # nico-patho-rest
 
 >
->> Entwicklung einer Datenbank und einer Web-Anwendung zur Visualisierung der Auswirkung von Tabkkonsum auf die Gesundheit
+> Entwicklung einer Datenbank und einer Web-Anwendung zur Visualisierung der Auswirkung von Tabkkonsum auf die Gesundheit
 >
 >
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
