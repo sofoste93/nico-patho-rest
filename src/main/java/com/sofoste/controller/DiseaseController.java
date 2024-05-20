@@ -10,6 +10,7 @@ import org.jboss.logging.Logger;
 
 import java.util.List;
 
+
 @Path("/diseases")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -28,9 +29,15 @@ public class DiseaseController {
     }
 
     @GET
-    public Response getAllDiseases() {
+    public Response getAllDiseases(@QueryParam("search") String search) {
         LOG.info("Retrieving all diseases");
-        List<Disease> diseases = diseaseService.findAllDiseases();
+        List<Disease> diseases;
+        if (search != null && !search.isEmpty()) {
+            LOG.infof("Searching diseases with query: %s", search);
+            diseases = diseaseService.searchDiseases(search);
+        } else {
+            diseases = diseaseService.findAllDiseases();
+        }
         if (diseases != null && !diseases.isEmpty()) {
             return Response.ok(diseases).build();
         } else {

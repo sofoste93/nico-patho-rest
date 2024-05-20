@@ -1,10 +1,9 @@
 package com.sofoste.service;
 
 import com.sofoste.model.Disease;
-import com.sofoste.repository.DiseaseRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
@@ -12,34 +11,42 @@ import java.util.List;
 public class DiseaseService {
 
     @Inject
-    DiseaseRepository diseaseRepository;
+    EntityManager entityManager;
 
-    @Transactional
     public Disease saveDisease(Disease disease) {
-        diseaseRepository.persist(disease);
+        entityManager.persist(disease);
         return disease;
     }
 
+    public List<Disease> findAllDiseases() {
+        return entityManager.createQuery("SELECT d FROM Disease d", Disease.class).getResultList();
+    }
+
     public Disease findDiseaseById(Long id) {
-        return diseaseRepository.findById(id);
+        return entityManager.find(Disease.class, id);
     }
 
-    public List<Disease> findAllDiseases(){
-        return diseaseRepository.findAll().list();
-    }
-
-    @Transactional
     public Disease updateDisease(Long id, Disease disease) {
-        Disease entity = diseaseRepository.findById(id);
-        if(entity != null) {
-            entity.setName(disease.getName());
-            entity.setDescription(disease.getDescription());
+        Disease existingDisease = entityManager.find(Disease.class, id);
+        if (existingDisease != null) {
+            existingDisease.setName(disease.getName());
+            existingDisease.setDescription(disease.getDescription());
+            entityManager.merge(existingDisease);
+            return existingDisease;
         }
-        return entity;
+        return null;
     }
 
-    @Transactional
     public void deleteDisease(Long id) {
-        diseaseRepository.deleteById(id);
+        Disease disease = entityManager.find(Disease.class, id);
+        if (disease != null) {
+            entityManager.remove(disease);
+        }
+    }
+
+    public List<Disease> searchDiseases(String query) {
+        return entityManager.createQuery("SELECT d FROM Disease d WHERE d.name LIKE :query OR d.description LIKE :query", Disease.class)
+                .setParameter("query", "%" + query + "%")
+                .getResultList();
     }
 }
