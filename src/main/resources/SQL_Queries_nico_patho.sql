@@ -60,9 +60,9 @@ VALUES ('Tobacco GmbH', 'Berlin');
 INSERT INTO Firm (name, headquarters) 
 VALUES ('Tobacco Company A', 'Heven');
 # Product
-INSERT INTO Product (name, type, manufacturer) 
-VALUES ('Cigarette A', 'Cigarette', 'Tobacco SA');
-INSERT INTO Product (name, type, manufacturer) 
-VALUES ('Cigarette B', 'Cigarette', 'Tobacco GmbH');
-INSERT INTO Product (name, type, manufacturer) 
-VALUES ('Cigarette C', 'Cigarette', 'Tobacco Company A');
+#INSERT INTO Product (name, type, manufacturer)
+#VALUES ('Cigarette A', 'Cigarette', 'Tobacco SA');
+#INSERT INTO Product (name, type, manufacturer)
+#VALUES ('Cigarette B', 'Cigarette', 'Tobacco GmbH');
+#INSERT INTO Product (name, type, manufacturer)
+#VALUES ('Cigarette C', 'Cigarette', 'Tobacco Company A');
