@@ -6,6 +6,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @ApplicationScoped
 public class ProductService {
 
@@ -16,6 +18,10 @@ public class ProductService {
     public Product saveProduct(Product product) {
         productRepository.persist(product);
         return product;
+    }
+
+    public List<Product> findAllProducts() {
+        return productRepository.listAll();
     }
 
     public Product findProductById(Long id) {
@@ -30,6 +36,7 @@ public class ProductService {
             entity.setNicotineContent(product.getNicotineContent());
             entity.setTarContent(product.getTarContent());
             entity.setCondensateContent(product.getCondensateContent());
+            entity.setFirm(product.getFirm());
         }
         return entity;
     }

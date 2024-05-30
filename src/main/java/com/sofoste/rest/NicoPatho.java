@@ -1,4 +1,4 @@
-package com.sofoste;
+package com.sofoste.rest;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -14,4 +14,3 @@ public class NicoPatho {
         return "Welcome to Niko-Patho REST";
     }
 }
-

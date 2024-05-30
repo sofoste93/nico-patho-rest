@@ -10,7 +10,6 @@ import org.jboss.logging.Logger;
 
 import java.util.List;
 
-
 @Path("/diseases")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

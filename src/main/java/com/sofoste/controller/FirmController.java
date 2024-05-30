@@ -7,6 +7,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.List;
+
 @Path("/firms")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -19,6 +21,16 @@ public class FirmController {
     public Response createFirm(Firm firm) {
         Firm created = firmService.saveFirm(firm);
         return Response.ok(created).status(Response.Status.CREATED).build();
+    }
+
+    @GET
+    public Response getAllFirms() {
+        List<Firm> firms = firmService.findAllFirms();
+        if (firms != null && !firms.isEmpty()) {
+            return Response.ok(firms).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET

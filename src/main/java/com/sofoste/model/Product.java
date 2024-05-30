@@ -5,8 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Size;
-
 
 @Entity
 public class Product {
@@ -26,6 +26,9 @@ public class Product {
 
     @NotNull
     private double condensateContent; // Kondensat
+
+    @ManyToOne
+    private Firm firm;
 
     // Getters and Setters
     public Long getId() {
@@ -66,5 +69,13 @@ public class Product {
 
     public void setCondensateContent(double condensateContent) {
         this.condensateContent = condensateContent;
+    }
+
+    public Firm getFirm() {
+        return firm;
+    }
+
+    public void setFirm(Firm firm) {
+        this.firm = firm;
     }
 }

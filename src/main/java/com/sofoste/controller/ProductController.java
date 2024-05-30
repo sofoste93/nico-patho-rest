@@ -7,6 +7,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.List;
+
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -19,6 +21,16 @@ public class ProductController {
     public Response createProduct(Product product) {
         Product created = productService.saveProduct(product);
         return Response.ok(created).status(Response.Status.CREATED).build();
+    }
+
+    @GET
+    public Response getAllProducts() {
+        List<Product> products = productService.findAllProducts();
+        if (products != null && !products.isEmpty()) {
+            return Response.ok(products).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET

@@ -10,8 +10,8 @@ public class GlobalExceptionHandler implements ExceptionMapper<Exception> {
     @Override
     public Response toResponse(Exception e) {
         return Response.status(Response.Status.BAD_REQUEST)
-                       .entity("Error: " + e.getMessage())
-                       .type(MediaType.APPLICATION_JSON)
-                       .build();
+                .entity("Error: " + e.getMessage())
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 }

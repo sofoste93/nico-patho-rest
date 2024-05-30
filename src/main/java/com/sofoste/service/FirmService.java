@@ -6,6 +6,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @ApplicationScoped
 public class FirmService {
 
@@ -16,6 +18,10 @@ public class FirmService {
     public Firm saveFirm(Firm firm) {
         firmRepository.persist(firm);
         return firm;
+    }
+
+    public List<Firm> findAllFirms() {
+        return firmRepository.listAll();
     }
 
     public Firm findFirmById(Long id) {

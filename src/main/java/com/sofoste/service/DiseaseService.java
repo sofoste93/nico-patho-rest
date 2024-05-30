@@ -1,9 +1,10 @@
 package com.sofoste.service;
 
 import com.sofoste.model.Disease;
+import com.sofoste.repository.DiseaseRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -11,42 +12,39 @@ import java.util.List;
 public class DiseaseService {
 
     @Inject
-    EntityManager entityManager;
+    DiseaseRepository diseaseRepository;
 
+    @Transactional
     public Disease saveDisease(Disease disease) {
-        entityManager.persist(disease);
+        diseaseRepository.persist(disease);
         return disease;
     }
 
     public List<Disease> findAllDiseases() {
-        return entityManager.createQuery("SELECT d FROM Disease d", Disease.class).getResultList();
+        return diseaseRepository.listAll();
     }
 
     public Disease findDiseaseById(Long id) {
-        return entityManager.find(Disease.class, id);
+        return diseaseRepository.findById(id);
     }
 
+    @Transactional
     public Disease updateDisease(Long id, Disease disease) {
-        Disease existingDisease = entityManager.find(Disease.class, id);
+        Disease existingDisease = diseaseRepository.findById(id);
         if (existingDisease != null) {
             existingDisease.setName(disease.getName());
             existingDisease.setDescription(disease.getDescription());
-            entityManager.merge(existingDisease);
             return existingDisease;
         }
         return null;
     }
 
+    @Transactional
     public void deleteDisease(Long id) {
-        Disease disease = entityManager.find(Disease.class, id);
-        if (disease != null) {
-            entityManager.remove(disease);
-        }
+        diseaseRepository.deleteById(id);
     }
 
     public List<Disease> searchDiseases(String query) {
-        return entityManager.createQuery("SELECT d FROM Disease d WHERE d.name LIKE :query OR d.description LIKE :query", Disease.class)
-                .setParameter("query", "%" + query + "%")
-                .getResultList();
+        return diseaseRepository.find("name like ?1 or description like ?1", "%" + query + "%").list();
     }
 }
