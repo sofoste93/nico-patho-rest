@@ -16,7 +16,11 @@ public class DiseaseService {
 
     @Transactional
     public Disease saveDisease(Disease disease) {
-        diseaseRepository.persist(disease);
+        if (disease.getId() == null) {
+            diseaseRepository.persist(disease);
+        } else {
+            disease = diseaseRepository.getEntityManager().merge(disease);
+        }
         return disease;
     }
 
