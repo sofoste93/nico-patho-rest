@@ -24,8 +24,13 @@ public class FirmController {
     }
 
     @GET
-    public Response getAllFirms() {
-        List<Firm> firms = firmService.findAllFirms();
+    public Response getAllFirms(@QueryParam("search") String search) {
+        List<Firm> firms;
+        if (search != null && !search.isEmpty()) {
+            firms = firmService.searchFirms(search);
+        } else {
+            firms = firmService.findAllFirms();
+        }
         if (firms != null && !firms.isEmpty()) {
             return Response.ok(firms).build();
         } else {

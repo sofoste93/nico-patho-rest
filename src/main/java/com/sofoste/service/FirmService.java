@@ -5,7 +5,6 @@ import com.sofoste.repository.FirmRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-
 import java.util.List;
 
 @ApplicationScoped
@@ -16,12 +15,12 @@ public class FirmService {
 
     @Transactional
     public Firm saveFirm(Firm firm) {
-        firmRepository.persist(firm);
+        if (firm.getId() == null) {
+            firmRepository.persist(firm);
+        } else {
+            firm = firmRepository.getEntityManager().merge(firm);
+        }
         return firm;
-    }
-
-    public List<Firm> findAllFirms() {
-        return firmRepository.listAll();
     }
 
     public Firm findFirmById(Long id) {
@@ -44,5 +43,13 @@ public class FirmService {
     @Transactional
     public void deleteFirm(Long id) {
         firmRepository.deleteById(id);
+    }
+
+    public List<Firm> searchFirms(String query) {
+        return firmRepository.search(query);
+    }
+
+    public List<Firm> findAllFirms() {
+        return firmRepository.listAll();
     }
 }

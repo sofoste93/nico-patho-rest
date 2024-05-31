@@ -7,7 +7,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class FirmRepository implements PanacheRepository<Firm> {
-    public List<Firm> findByHeadquarters(String headquarters) {
-        return list("headquarters", headquarters);
+    public List<Firm> findByName(String name) {
+        return list("LOWER(name) = LOWER(?1)", name);
+    }
+
+    public List<Firm> search(String query) {
+        String searchQuery = "%" + query.toLowerCase() + "%";
+        return list("LOWER(name) like ?1 or LOWER(headquarters) like ?1", searchQuery);
     }
 }

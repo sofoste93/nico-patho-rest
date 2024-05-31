@@ -81,3 +81,8 @@ INSERT INTO Product_Disease (product_id, disease_id, riskLevel) VALUES
 
 -- solving duplicate foreign_key constraint issue...
 -- ALTER TABLE Product DROP FOREIGN KEY FKr87quxe6ptebktlybko00tarb;
+-- ALTER TABLE Product DROP FOREIGN KEY FKr87quxe6ptebktlybko00tarb;
+
+-- ALTER TABLE Product ADD CONSTRAINT FK_Firm_Product FOREIGN KEY (firm_id) REFERENCES Firm(id);
+
+
