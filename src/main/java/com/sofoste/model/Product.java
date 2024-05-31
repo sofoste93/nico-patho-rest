@@ -1,11 +1,7 @@
 package com.sofoste.model;
 
 import io.smallrye.common.constraint.NotNull;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -28,6 +24,7 @@ public class Product {
     private double condensateContent; // Kondensat
 
     @ManyToOne
+    @JoinColumn(name = "firm_id", foreignKey = @ForeignKey(name = "fk_firm_id"))
     private Firm firm;
 
     // Getters and Setters

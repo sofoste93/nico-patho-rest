@@ -16,7 +16,11 @@ public class ProductService {
 
     @Transactional
     public Product saveProduct(Product product) {
-        productRepository.persist(product);
+        if (product.getId() == null) {
+            productRepository.persist(product);
+        } else {
+            product = productRepository.getEntityManager().merge(product);
+        }
         return product;
     }
 
@@ -30,19 +34,24 @@ public class ProductService {
 
     @Transactional
     public Product updateProduct(Long id, Product product) {
-        Product entity = productRepository.findById(id);
-        if (entity != null) {
-            entity.setBrandName(product.getBrandName());
-            entity.setNicotineContent(product.getNicotineContent());
-            entity.setTarContent(product.getTarContent());
-            entity.setCondensateContent(product.getCondensateContent());
-            entity.setFirm(product.getFirm());
+        Product existingProduct = productRepository.findById(id);
+        if (existingProduct != null) {
+            existingProduct.setBrandName(product.getBrandName());
+            existingProduct.setNicotineContent(product.getNicotineContent());
+            existingProduct.setTarContent(product.getTarContent());
+            existingProduct.setCondensateContent(product.getCondensateContent());
+            existingProduct.setFirm(product.getFirm());
+            return existingProduct;
         }
-        return entity;
+        return null;
     }
 
     @Transactional
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> searchProducts(String query) {
+        return productRepository.find("brandName like ?1 or firm.name like ?1", "%" + query + "%").list();
     }
 }

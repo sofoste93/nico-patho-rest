@@ -24,8 +24,13 @@ public class ProductController {
     }
 
     @GET
-    public Response getAllProducts() {
-        List<Product> products = productService.findAllProducts();
+    public Response getAllProducts(@QueryParam("search") String search) {
+        List<Product> products;
+        if (search != null && !search.isEmpty()) {
+            products = productService.searchProducts(search);
+        } else {
+            products = productService.findAllProducts();
+        }
         if (products != null && !products.isEmpty()) {
             return Response.ok(products).build();
         } else {
