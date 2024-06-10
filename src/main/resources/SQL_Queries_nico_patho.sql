@@ -27,7 +27,7 @@ CREATE TABLE Product (
                          tarContent DOUBLE NOT NULL,
                          condensateContent DOUBLE NOT NULL,
                          firm_id BIGINT,
-                         FOREIGN KEY (firm_id) REFERENCES Firm(id)
+                         FOREIGN KEY (firm_id) REFERENCES Firm(id) -- Ensure unique constraint name
 );
 
 -- Table Product_Disease (for many-to-many relationship between Product and Disease)
@@ -78,6 +78,7 @@ INSERT INTO Product_Disease (product_id, disease_id, riskLevel) VALUES
                                                                     (4, 5, 'Moderate'),
                                                                     (5, 3, 'Low'),
                                                                     (6, 2, 'High');
+
 
 -- solving duplicate foreign_key constraint issue...
 -- ALTER TABLE Product DROP FOREIGN KEY FKr87quxe6ptebktlybko00tarb;

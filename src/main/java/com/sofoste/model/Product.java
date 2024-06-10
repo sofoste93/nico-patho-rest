@@ -24,7 +24,7 @@ public class Product {
     private double condensateContent; // Kondensat
 
     @ManyToOne
-    @JoinColumn(name = "firm_id", foreignKey = @ForeignKey(name = "fk_firm_id"))
+    @JoinColumn(name = "firm_id")
     private Firm firm;
 
     // Getters and Setters
