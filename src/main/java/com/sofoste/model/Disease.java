@@ -1,9 +1,8 @@
 package com.sofoste.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Disease {
@@ -12,6 +11,9 @@ public class Disease {
     private Long id;
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "disease", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductDisease> productDiseases;
 
     // Getters and setters
     public Long getId() {

@@ -4,6 +4,8 @@ import io.smallrye.common.constraint.NotNull;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Entity
 public class Product {
     @Id
@@ -21,11 +23,14 @@ public class Product {
     private double tarContent;
 
     @NotNull
-    private double condensateContent; // Kondensat
+    private double condensateContent;
 
     @ManyToOne
     @JoinColumn(name = "firm_id")
     private Firm firm;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductDisease> productDiseases;
 
     // Getters and Setters
     public Long getId() {

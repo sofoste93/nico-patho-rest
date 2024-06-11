@@ -5,7 +5,6 @@ import com.sofoste.repository.ProductDiseaseRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-
 import java.util.List;
 
 @ApplicationScoped
@@ -16,7 +15,11 @@ public class ProductDiseaseService {
 
     @Transactional
     public ProductDisease saveProductDisease(ProductDisease productDisease) {
-        productDiseaseRepository.persist(productDisease);
+        if (productDisease.getId() == null) {
+            productDiseaseRepository.persist(productDisease);
+        } else {
+            productDisease = productDiseaseRepository.getEntityManager().merge(productDisease);
+        }
         return productDisease;
     }
 
@@ -29,20 +32,27 @@ public class ProductDiseaseService {
     }
 
     @Transactional
-    public void deleteProductDisease(Long id) {
-        productDiseaseRepository.deleteById(id);
-    }
-
-    @Transactional
     public ProductDisease updateProductDisease(Long id, ProductDisease productDisease) {
         ProductDisease existingProductDisease = productDiseaseRepository.findById(id);
         if (existingProductDisease != null) {
             existingProductDisease.setProduct(productDisease.getProduct());
             existingProductDisease.setDisease(productDisease.getDisease());
             existingProductDisease.setRiskLevel(productDisease.getRiskLevel());
-            productDiseaseRepository.persist(existingProductDisease);
             return existingProductDisease;
         }
         return null;
+    }
+
+    @Transactional
+    public void deleteProductDisease(Long id) {
+        productDiseaseRepository.deleteById(id);
+    }
+
+    public List<ProductDisease> findByProductId(Long productId) {
+        return productDiseaseRepository.findByProductId(productId);
+    }
+
+    public List<ProductDisease> findByDiseaseId(Long diseaseId) {
+        return productDiseaseRepository.findByDiseaseId(diseaseId);
     }
 }

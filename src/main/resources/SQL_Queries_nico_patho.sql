@@ -31,14 +31,18 @@ CREATE TABLE Product (
 );
 
 -- Table Product_Disease (for many-to-many relationship between Product and Disease)
-CREATE TABLE Product_Disease (
-                                 product_id BIGINT,
-                                 disease_id BIGINT,
-                                 riskLevel VARCHAR(255),
-                                 PRIMARY KEY (product_id, disease_id),
-                                 FOREIGN KEY (product_id) REFERENCES Product(id),
-                                 FOREIGN KEY (disease_id) REFERENCES Disease(id)
-);
+CREATE TABLE `ProductDisease` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) NOT NULL,
+  `disease_id` bigint(20) NOT NULL,
+  `riskLevel` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY (`product_id`, `disease_id`),
+  KEY `disease_id` (`disease_id`),
+  CONSTRAINT `ProductDisease_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`),
+  CONSTRAINT `ProductDisease_ibfk_2` FOREIGN KEY (`disease_id`) REFERENCES `Disease` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- Insertion de données dans la table Disease
 INSERT INTO Disease (name, description) VALUES
@@ -67,7 +71,7 @@ INSERT INTO Product (brandName, nicotineContent, tarContent, condensateContent, 
                                                                                              ('Dense Haze', 1.6, 22.0, 19.0, 6);
 
 -- Insertion de données dans la table Product_Disease
-INSERT INTO Product_Disease (product_id, disease_id, riskLevel) VALUES
+INSERT INTO ProductDisease (product_id, disease_id, riskLevel) VALUES
                                                                     (1, 1, 'High'),
                                                                     (1, 2, 'Moderate'),
                                                                     (1, 3, 'High'),
