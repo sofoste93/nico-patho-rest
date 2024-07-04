@@ -1,11 +1,12 @@
 # nico-patho-rest
-
+![niko_patho_logo.png](src/main/resources/META-INF/resources/images/niko_patho_logo.png)
 >
 > Entwicklung einer Datenbank und einer Web-Anwendung zur Visualisierung der Auswirkung von Tabkkonsum auf die Gesundheit
 >
 > YOU CAN CHECK THE [UI APPLICATION OUT HERE](https://github.com/sofoste93/nico-patho-ui)
  <hr>
 
+![niko_patho_logo.png](src/main/resources/META-INF/resources/images/NicoPathoUi.png)
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
